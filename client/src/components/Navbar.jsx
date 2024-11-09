@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
-
+import { FaUser } from "react-icons/fa";
 const Navbar = () => {
   const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,21 +15,6 @@ const Navbar = () => {
       name: loggedUser?.displayName,
     });
   }, [loggedUser?.displayName, loggedUser?.email, loggedUser?.photoURL]);
-  useEffect(() => {
-    // Example user state simulation. Replace with actual user fetch from auth context or service
-    const fetchedUser = {
-      isAuthenticated: true,
-      photoURL: "https://example.com/user-photo.jpg",
-    };
-    setUser(fetchedUser);
-  }, []);
-
-  const handleSearchChange = (e) => setSearch(e.target.value);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    alert(`Searching for: ${search}`);
-  };
 
   const handleLogout = () => {
     logout();
@@ -78,29 +63,42 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {user?.email ? (
             <>
-              <img
-                src={user.photoURL}
-                alt="User"
-                className="w-8 h-8 rounded-full"
-              />
+              {user.photoURL ? (
+                <Link to="/profile">
+                  {" "}
+                  <img
+                    src={user?.photoURL}
+                    alt={user?.name}
+                    className="w-8 h-8 rounded-full"
+                  />
+                </Link>
+              ) : (
+                <Link to="profile">
+                  <FaUser size={30} />
+                </Link>
+              )}
+
               <p>
                 <Link to="profile">{user.name}</Link>
               </p>
               <button
                 onClick={handleLogout}
-                className="btn btn-sm btn-ghost text-gray-200"
+                className="bg-red-500 text-white rounded-full cursor-pointer leading-6 font-medium text-center shadow-xs transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-600"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/signin" className="btn btn-sm btn-ghost text-gray-200">
+              <Link
+                to="/signin"
+                className="bg-indigo-50 text-indigo-500 rounded-full cursor-pointer leading-6 font-medium text-center transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-100"
+              >
                 Sign In
               </Link>
               <Link
                 to="/signup"
-                className="btn btn-sm btn-primary text-gray-200"
+                className="bg-indigo-500 text-white rounded-full cursor-pointer leading-6 font-medium text-center shadow-xs transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-600"
               >
                 Sign Up
               </Link>
@@ -161,24 +159,44 @@ const Navbar = () => {
           >
             My College
           </Link>
-          {user?.isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="w-full text-left text-lg hover:bg-indigo-600 rounded-md px-3 py-2"
-            >
-              Logout
-            </button>
+          {user?.email ? (
+            <>
+              {user.photoURL ? (
+                <Link to="/profile">
+                  {" "}
+                  <img
+                    src={user?.photoURL}
+                    alt={user?.name}
+                    className="w-8 h-8 rounded-full"
+                  />
+                </Link>
+              ) : (
+                <Link to="profile">
+                  <FaUser size={30} />
+                </Link>
+              )}
+
+              <p>
+                <Link to="profile">{user.name}</Link>
+              </p>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white rounded-full cursor-pointer leading-6 font-medium text-center shadow-xs transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-600"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <Link
-                to="/login"
-                className="block text-lg hover:bg-indigo-600 rounded-md px-3 py-2"
+                to="/signin"
+                className="bg-indigo-50 text-indigo-500 rounded-full cursor-pointer leading-6 font-medium text-center transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-100"
               >
                 Sign In
               </Link>
               <Link
-                to="/register"
-                className="block text-lg hover:bg-indigo-600 rounded-md px-3 py-2"
+                to="/signup"
+                className="bg-indigo-500 text-white rounded-full cursor-pointer leading-6 font-medium text-center shadow-xs transition-all duration-500 py-2 px-5 text-sm hover:bg-indigo-600"
               >
                 Sign Up
               </Link>

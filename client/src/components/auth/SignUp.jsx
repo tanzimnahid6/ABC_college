@@ -1,18 +1,20 @@
 // src/components/SignUp.js
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { googlLogin } = useAuth();
+  const { googlLogin,createUser } = useAuth();
+  const navigate = useNavigate()
 
   const handleGoogleLogin = () => {
     googlLogin()
       .then((res) => {
         console.log(res);
+        navigate("/")
       })
       .catch((err) => {
         console.log(err);
@@ -25,7 +27,15 @@ const SignUp = () => {
       alert("Passwords do not match");
       return;
     }
-    alert(`Email: ${email}, Password: ${password}`);
+    // alert(`Email: ${email}, Password: ${password}`);
+    createUser(email, password)
+      .then((res) => {
+        console.log("credential login result", res);
+        navigate("/")
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

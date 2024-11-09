@@ -1,10 +1,12 @@
+
 import CollegeCard from "../components/CollegeCard";
 import Loading from "../components/Loading";
-import useFetch from "../hooks/useFetch";
+import { useColleges } from "../context/CollegesContext";
+
 
 const Colleges = () => {
-  const { data: colleges, loading, error } = useFetch("api/colleges");
-
+  const { colleges, loading, error } = useColleges();
+  
   if (loading) return <Loading></Loading>;
   if (error) return <p>Error: {error}</p>;
 

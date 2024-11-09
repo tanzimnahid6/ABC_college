@@ -10,6 +10,7 @@ import SignIn from "../components/auth/SignIn";
 import SignUp from "../components/auth/SignUp";
 import Profile from "../components/Profile/Profile";
 import CollegeDetails from "../pages/CollegeDetails/CollegeDetails";
+import PrivetRoute from "./PrivetRoute";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -26,7 +27,11 @@ const route = createBrowserRouter([
       },
       {
         path: "/colleges/:id",
-        element: <CollegeDetails></CollegeDetails>,
+        element: (
+          <PrivetRoute>
+            <CollegeDetails></CollegeDetails>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/users",
@@ -34,15 +39,27 @@ const route = createBrowserRouter([
       },
       {
         path: "/my-college",
-        element: <MyCollege></MyCollege>,
+        element: (
+          <PrivetRoute>
+            <MyCollege></MyCollege>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/admission",
-        element: <Admission></Admission>,
+        element: (
+          <PrivetRoute>
+            <Admission></Admission>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: (
+          <PrivetRoute>
+            <Profile></Profile>
+          </PrivetRoute>
+        ),
       },
       {
         path: "*",

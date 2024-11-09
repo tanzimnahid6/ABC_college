@@ -7,7 +7,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
- 
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 import { createContext, useContext, useEffect, useState } from "react";
@@ -19,7 +19,6 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-
 
   //create user with email password
   const createUser = (email, password) => {
@@ -40,6 +39,12 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
+
+  //forgot password and send email to reset password
+  const forgotPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   //ON AUTH STATE CHANGE
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -60,7 +65,7 @@ const AuthProvider = ({ children }) => {
     setLoading,
     logout,
     googlLogin,
-    
+    forgotPassword,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
