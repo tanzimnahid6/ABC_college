@@ -3,9 +3,8 @@ import { useAuth } from "../context/AuthProvider";
 import { useColleges } from "../context/CollegesContext";
 import useFetch from "../hooks/useFetch";
 
-
 const Admission = () => {
-  const { loading,  refetch } = useFetch("api/users", "POST");
+  const { loading, refetch } = useFetch("api/users", "POST");
   const { user } = useAuth();
 
   const { colleges: data } = useColleges();
@@ -46,11 +45,21 @@ const Admission = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = { ...formData, university: selectedCollege.name };
-    console.log(userInfo);
-    await refetch({
-      body: JSON.stringify(userInfo),
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      localStorage.setItem("myCollege", JSON.stringify(userInfo));
+      console.log("Data saved in localStorage:", userInfo);
+    } catch (error) {
+      console.error("Error saving data to localStorage:", error);
+    }
+
+    try {
+      await refetch({
+        body: JSON.stringify(userInfo),
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
   };
 
   return (
@@ -63,7 +72,9 @@ const Admission = () => {
             <button
               key={college._id}
               onClick={() => handleCollegeClick(college)}
-              className={`btn btn-outline w-full mb-2 ${selectedCollege?.name === college?.name ? 'bg-blue-200' : ''}`}
+              className={`btn btn-outline w-full mb-2 ${
+                selectedCollege?.name === college?.name ? "bg-blue-200" : ""
+              }`}
             >
               {college.name}
             </button>
@@ -141,7 +152,11 @@ const Admission = () => {
               onChange={handleImageChange}
               required
             /> */}
-            <button type="submit" disabled={loading} className="btn btn-primary w-full">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary w-full"
+            >
               {loading ? "Submitting" : "Submit"}
             </button>
           </form>

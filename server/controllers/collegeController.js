@@ -35,3 +35,26 @@ exports.getCollegeById = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getCollegeByName = async (req, res) => {
+  const collegeName = req.query.college; // Query parameter for college name
+
+  if (!collegeName) {
+    return res.status(400).json({ message: "College name is required" });
+  }
+
+  try {
+    const college = await College.findOne({
+      name: new RegExp(collegeName, "i"),
+    }); // Case-insensitive search
+
+    if (!college) {
+      return res.status(404).json({ message: "College not found" });
+    }
+
+    res.status(200).json(college);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

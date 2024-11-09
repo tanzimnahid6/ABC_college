@@ -1,16 +1,18 @@
-// src/pages/MyCollege.js
-import{ useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const MyCollege = () => {
-  const [collegeData, setCollegeData] = useState(null);
+  const [collegeData, setCollegeData] = useState({});
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
+    // Retrieve the data from localStorage and set it in state
     const storedCollegeData = JSON.parse(localStorage.getItem('myCollege'));
-    setCollegeData(storedCollegeData);
+    if (storedCollegeData) {
+      setCollegeData(storedCollegeData);  // Update state with stored data
+    }
   }, []);
-
+  
   const handleReviewSubmit = () => {
     // Handle storing the review (e.g., send it to the server or add it to local storage)
     alert(`Review added! Rating: ${rating} Stars, Review: ${review}`);
@@ -18,7 +20,8 @@ const MyCollege = () => {
     setRating(0);
   };
 
-  if (!collegeData) {
+  // Display a message if no data is found in localStorage
+  if (!collegeData || !collegeData.name) {
     return <p className="text-center text-gray-600 mt-10">No college information found. Please submit an admission form.</p>;
   }
 
@@ -26,8 +29,8 @@ const MyCollege = () => {
     <div className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6 text-center">My College</h1>
       <div className="card bg-base-100 shadow-lg p-6 rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">{collegeData.college.name}</h2>
-        <p><strong>Candidate Name:</strong> {collegeData.candidateName}</p>
+        <h2 className="text-2xl font-semibold mb-4">{collegeData.university}</h2>
+        <p><strong>Candidate Name:</strong> {collegeData.name}</p>
         <p><strong>Subject:</strong> {collegeData.subject}</p>
         <p><strong>Email:</strong> {collegeData.email}</p>
         <p><strong>Phone:</strong> {collegeData.phone}</p>
