@@ -34,6 +34,17 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+//get user by email
+exports.getUserByEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Update a user
 exports.updateUser = async (req, res) => {
   try {
@@ -41,6 +52,22 @@ exports.updateUser = async (req, res) => {
       new: true,
       runValidators: true,
     });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// update a user by email
+exports.updateUserByEmail = async (req, res) => {
+  
+  try {
+    const user = await User.findOneAndUpdate(
+      { email: req.params.email },
+      req.body,
+      { new: true, runValidators: true }
+    );
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {

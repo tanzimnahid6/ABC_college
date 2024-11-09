@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { useColleges } from "../context/CollegesContext";
 import useFetch from "../hooks/useFetch";
-import Loading from "../components/Loading";
+
 
 const Admission = () => {
-  const { loading, error, refetch } = useFetch("api/users", "POST");
+  const { loading,  refetch } = useFetch("api/users", "POST");
   const { user } = useAuth();
 
   const { colleges: data } = useColleges();
@@ -45,7 +45,7 @@ const Admission = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userInfo = { ...formData, university: selectedCollege };
+    const userInfo = { ...formData, university: selectedCollege.name };
     console.log(userInfo);
     await refetch({
       body: JSON.stringify(userInfo),
@@ -62,8 +62,8 @@ const Admission = () => {
           {colleges?.map((college) => (
             <button
               key={college._id}
-              onClick={() => handleCollegeClick(college?.name)}
-              className="btn btn-outline w-full mb-2"
+              onClick={() => handleCollegeClick(college)}
+              className={`btn btn-outline w-full mb-2 ${selectedCollege?.name === college?.name ? 'bg-blue-200' : ''}`}
             >
               {college.name}
             </button>
