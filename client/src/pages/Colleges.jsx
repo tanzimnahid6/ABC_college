@@ -4,7 +4,6 @@ import useFetch from "../hooks/useFetch";
 
 const Colleges = () => {
   const { data: colleges, loading, error } = useFetch("api/colleges");
-  console.log(colleges);
 
   if (loading) return <Loading></Loading>;
   if (error) return <p>Error: {error}</p>;

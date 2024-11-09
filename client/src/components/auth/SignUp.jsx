@@ -1,14 +1,22 @@
 // src/components/SignUp.js
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { googlLogin } = useAuth();
 
   const handleGoogleLogin = () => {
-    alert("Google Sign-Up clicked");
+    googlLogin()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleSubmit = (e) => {
@@ -50,11 +58,17 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
-        <button onClick={handleGoogleLogin} className="btn btn-outline w-full mt-4">
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full mt-4"
+        >
           Sign up with Google
         </button>
         <p className="text-center mt-4">
-          Already have an account? <Link to="/signin" className="text-blue-500">Sign In</Link>
+          Already have an account?{" "}
+          <Link to="/signin" className="text-blue-500">
+            Sign In
+          </Link>
         </p>
       </div>
     </div>

@@ -2,32 +2,16 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import Loading from "../../components/Loading";
 
-// Sample college data
-const collegeData = [
-  {
-    id: 1,
-    name: "Green Valley College",
-    image: "/images/green_valley_college.jpg",
-    rating: 4.5,
-    admissionDates: "August 1 - September 30",
-    admissionProcess:
-      "Submit application forms, complete interviews, and wait for acceptance.",
-    events: ["Science Fair", "Annual Sports Meet", "Cultural Fest"],
-    researchHistory: [
-      { title: "Environmental Studies on Green Habitats", year: 2022 },
-      { title: "Renewable Energy Applications", year: 2021 },
-    ],
-    sports: ["Basketball", "Football", "Swimming"],
-  },
-  // Add more college objects as needed
-];
-
 const CollegeDetails = () => {
   const { id } = useParams();
   const { data: college, loading, error } = useFetch(`api/colleges/${id}`);
+  console.log(college);
 
   if (loading) {
     return <Loading></Loading>;
+  }
+  if (error) {
+    return <p>Error fetching college data:{error}</p>;
   }
 
   if (!college) {
@@ -64,9 +48,11 @@ const CollegeDetails = () => {
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Research History</h2>
         <ul className="list-disc list-inside pl-4">
-          {college?.researchHistory?.map((research, index) => (
+          {college?.researchPaperIds?.map((research, index) => (
             <li key={index}>
-              {research.title} ({research.year})
+              <a href={research?.link} className="link text-blue-500">
+                {research?.title}
+              </a>
             </li>
           ))}
         </ul>

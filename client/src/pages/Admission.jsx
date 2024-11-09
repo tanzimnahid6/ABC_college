@@ -1,5 +1,8 @@
     
 import  { useState } from 'react';
+import { useAuth } from '../context/AuthProvider';
+
+
 
 const colleges = [
   { id: 1, name: 'Harvard University' },
@@ -9,6 +12,8 @@ const colleges = [
 ];
 
 const Admission = () => {
+  const {user}= useAuth()
+  console.log(user);
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [formData, setFormData] = useState({
     candidateName: '',

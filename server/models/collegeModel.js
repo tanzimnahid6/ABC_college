@@ -10,7 +10,7 @@ const collegeSchema = new Schema(
     admissionDates: { type: String }, // Admission period in string format
     events: [{ type: String }], // List of event names
     sports: [{ type: String }], // List of sports or competitions
-    researchPaperIds: [{ type: Schema.Types.ObjectId, ref: "ResearchPaper" }], // References to ResearchPaper documents
+    researchPaperIds: [{ type: Schema.Types.ObjectId, ref: "Researchpaper" }], // References to ResearchPaper documents
     reviewIds: [{ type: Schema.Types.ObjectId, ref: "Review" }], // References to Review documents
   },
   { timestamps: true }
