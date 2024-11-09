@@ -2,22 +2,17 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { useColleges } from "../context/CollegesContext";
 import useFetch from "../hooks/useFetch";
-
-const colleges = [
-  { id: 1, name: "Harvard University" },
-  { id: 2, name: "MIT" },
-  { id: 3, name: "Stanford University" },
-  { id: 4, name: "Yale University" },
-];
+import Loading from "../components/Loading";
 
 const Admission = () => {
+  const { loading, error, refetch } = useFetch("api/users", "POST");
   const { user } = useAuth();
- 
+
   const { colleges: data } = useColleges();
   const [colleges, setColleges] = useState(data || []);
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [formData, setFormData] = useState({
-    candidateName: "",
+    name: "",
     subject: "",
     email: "",
     phone: "",
@@ -29,7 +24,7 @@ const Admission = () => {
   const handleCollegeClick = (college) => {
     setSelectedCollege(college);
     setFormData({
-      candidateName: user?.displayName || "",
+      name: user?.displayName || "",
       subject: "",
       email: user?.email,
       phone: "",
@@ -48,11 +43,14 @@ const Admission = () => {
   //   setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
   // };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = { ...formData, university: selectedCollege };
-    console.log();
-    setSelectedCollege(userInfo);
+    console.log(userInfo);
+    await refetch({
+      body: JSON.stringify(userInfo),
+      headers: { "Content-Type": "application/json" },
+    });
   };
 
   return (
@@ -82,7 +80,7 @@ const Admission = () => {
               name="candidateName"
               placeholder="Candidate Name"
               className="input input-bordered w-full"
-              value={formData.candidateName}
+              value={formData.name}
               onChange={handleInputChange}
               required
             />
@@ -143,8 +141,8 @@ const Admission = () => {
               onChange={handleImageChange}
               required
             /> */}
-            <button type="submit" className="btn btn-primary w-full">
-              Submit
+            <button type="submit" disabled={loading} className="btn btn-primary w-full">
+              {loading ? "Submitting" : "Submit"}
             </button>
           </form>
         )}
