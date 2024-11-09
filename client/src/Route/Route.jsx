@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../components/auth/SignIn";
 import SignUp from "../components/auth/SignUp";
 import Profile from "../components/Profile/Profile";
+import CollegeDetails from "../pages/CollegeDetails/CollegeDetails";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,10 @@ const route = createBrowserRouter([
         element: <Colleges></Colleges>,
       },
       {
+        path: "/colleges/:id",
+        element: <CollegeDetails></CollegeDetails>,
+      },
+      {
         path: "/users",
         element: <Users></Users>,
       },
@@ -34,9 +39,10 @@ const route = createBrowserRouter([
       {
         path: "/admission",
         element: <Admission></Admission>,
-      },{
-        path:'/profile',
-        element:<Profile></Profile>,
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>,
       },
       {
         path: "*",
