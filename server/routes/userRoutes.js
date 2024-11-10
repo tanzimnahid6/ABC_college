@@ -1,10 +1,10 @@
 // routes/userRoutes.js
 const express = require('express');
-const { createUser, getUsers, getUserById, updateUser, deleteUser ,getUserByEmail,updateUserByEmail } = require('../controllers/userController');
+const { createUser, getUsers, getUserById, updateUser, deleteUser ,getUserByEmail,updateUserByEmail, loginUser } = require('../controllers/userController');
 
 const router = express.Router();
 
-router.post('/', createUser);
+router.post('/createUser', createUser);
 router.get('/', getUsers);
 router.get('/:email',getUserByEmail)
 router.get('/:id', getUserById);

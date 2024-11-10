@@ -6,6 +6,10 @@ const { replaceMongoIdInArray } = require("../utils/convertId");
 exports.createUser = async (req, res) => {
   try {
     const user = new User(req.body);
+    const isAlreadyExist = await User.findOne({email: user.email})
+    if(isAlreadyExist){
+      return res.json({success:false, message:"User already exist"})
+    }
     await user.save();
     res.status(201).json(user);
   } catch (error) {
