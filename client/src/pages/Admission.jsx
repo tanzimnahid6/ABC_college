@@ -4,7 +4,7 @@ import { useColleges } from "../context/CollegesContext";
 import useFetch from "../hooks/useFetch";
 
 const Admission = () => {
-  const { loading, refetch } = useFetch("api/users", "POST");
+  const { loading, refetch } = useFetch("api/users/createUser", "POST");
   const { user } = useAuth();
 
   const { colleges: data } = useColleges();
@@ -88,7 +88,7 @@ const Admission = () => {
             </h2>
             <input
               type="text"
-              name="candidateName"
+              name="name"
               placeholder="Candidate Name"
               className="input input-bordered w-full"
               value={formData.name}

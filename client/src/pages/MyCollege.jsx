@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
+import { TfiEmail } from 'react-icons/tfi';
+import { useColleges } from '../context/CollegesContext';
+import { useAuth } from '../context/AuthProvider';
 
 const MyCollege = () => {
+  const {user} = useAuth();
+  
   const [collegeData, setCollegeData] = useState({});
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
@@ -14,6 +19,15 @@ const MyCollege = () => {
   }, []);
   
   const handleReviewSubmit = () => {
+    fetch("http://localhost:5000/api/reviews/addReview",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({rating, review, email: user.email})
+    })
+    .then(res=>res.json())
+    .then(data=>console.log(data))
     // Handle storing the review (e.g., send it to the server or add it to local storage)
     alert(`Review added! Rating: ${rating} Stars, Review: ${review}`);
     setReview('');

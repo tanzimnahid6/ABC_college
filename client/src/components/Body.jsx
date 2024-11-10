@@ -1,65 +1,72 @@
-
+import { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import CollegeCard from "../components/CollegeCard";
 import Gallery from "./collegeInfo/Gallery/Gallery";
 import ResearchPaper from "./collegeInfo/ResearchPaper/ResearchPaper";
 import Review from "./collegeInfo/Review/Review";
 
-// Example college data
-const colleges = [
-  {
-    id: 1,
-    name: "Harvard University",
-    admissionDate: "Sept 1 - Oct 15",
-    events: "Convocation, Seminar",
-    researchHistory: "150+ years",
-    sports: "Football, Basketball",
-    image: "/path/to/image1.jpg",
-  },
-  {
-    id: 2,
-    name: "MIT",
-    admissionDate: "Aug 15 - Sept 30",
-    events: "Tech Expo, Workshop",
-    researchHistory: "100+ years",
-    sports: "Soccer, Baseball",
-    image: "/path/to/image2.jpg",
-  },
-  {
-    id: 3,
-    name: "Stanford University",
-    admissionDate: "Oct 1 - Nov 15",
-    events: "Hackathon, Conference",
-    researchHistory: "75+ years",
-    sports: "Tennis, Track",
-    image: "/path/to/image3.jpg",
-  },
-];
 const Body = () => {
+  const [search, setSearch] = useState("");
+  const [colleges, setColleges] = useState([]);
+  const [filteredColleges, setFilteredColleges] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch data on component mount
+  useEffect(() => {
+    setLoading(true);
+
+    fetch("http://localhost:5000/api/colleges")
+      .then(res => res.json())
+      .then(data => {
+        setColleges(data);
+        setFilteredColleges(data); // Show all colleges initially
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  // Filter colleges whenever search changes
+  useEffect(() => {
+    const filtered = colleges.filter(college =>
+      college.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    // Show only 3 colleges when search is empty
+    setFilteredColleges(search ? filtered : filtered.slice(0, 3));
+  }, [search, colleges]);
+
   return (
     <div className="space-y-10">
-      <Banner />
+      <Banner setSearch={setSearch} search={search} />
 
       {/* College Cards Section */}
       <section className="max-w-7xl mx-auto px-4">
         <h2 className="text-2xl font-bold mb-6 text-center">
-          Popular Colleges
+          {!search ? "Popular Colleges" : "Search Result"}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* {colleges.map((college) => (
-            <CollegeCard key={college.id} college={college} />
-          ))} */}
-        </div>
+
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredColleges.map(college => (
+              <CollegeCard key={college.id} college={college} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* College Image Gallery */}
-      <Gallery></Gallery>
+      <Gallery />
 
       {/* Research Paper Links */}
-      <ResearchPaper></ResearchPaper>
+      <ResearchPaper />
 
       {/* Review Section */}
-      <Review></Review>
+      <Review />
     </div>
   );
 };

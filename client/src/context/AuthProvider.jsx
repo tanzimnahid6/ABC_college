@@ -21,8 +21,18 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   //create user with email password
-  const createUser = (email, password) => {
+  const createUser = (email, password, name, address, subject, university, phone, dob) => {
     setLoading(true);
+    fetch("http://localhost:5000/api/users/createUser",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({email, password, name, address, subject, university, phone, dob})
+    })
+    .then(res=>res.json())
+    .then(data=>console.log(data))
+
     return createUserWithEmailAndPassword(auth, email, password);
   };
   //login with email and password

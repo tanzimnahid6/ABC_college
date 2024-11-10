@@ -2,7 +2,9 @@
 
 import { Link } from "react-router-dom";
 
-const CollegeCard = ({ college }) => (
+const CollegeCard = ({ college }) => {
+  
+  return(
   <div className="card w-full bg-base-100 shadow-md p-5 rounded-lg">
     <img
       src={college.image}
@@ -29,6 +31,7 @@ const CollegeCard = ({ college }) => (
       Details
     </Link>
   </div>
-);
+  )
+}
 
 export default CollegeCard;

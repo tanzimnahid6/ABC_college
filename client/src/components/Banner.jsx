@@ -1,13 +1,17 @@
+import { useState } from 'react';
 
-import  { useState } from 'react';
-
-const Banner = () => {
-  const [search, setSearch] = useState('');
-
+const Banner = ({ search, setSearch }) => {
   const handleSearchChange = (e) => setSearch(e.target.value);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    alert(`Searching for: ${search}`);
+    if (search.trim()) {
+      alert(`Searching for: ${search}`);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearch("");
   };
 
   return (
@@ -22,9 +26,22 @@ const Banner = () => {
           value={search}
           onChange={handleSearchChange}
         />
-        <button type="submit" className="btn btn-primary rounded-r-lg">
-          Search
-        </button>
+        {search ? (
+          <button
+            type="button"
+            onClick={handleClearSearch}
+            className="btn btn-secondary rounded-r-lg"
+          >
+            Clear
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-primary rounded-r-lg"
+          >
+            Search
+          </button>
+        )}
       </form>
     </div>
   );
