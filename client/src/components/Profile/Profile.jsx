@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:5000/api/users/${loggedUser?.email}`
+        ` https://abc-college-backend-76ka.vercel.app/api/users/${loggedUser?.email}`
       );
       const data = await response.json();
       setUser(data);
@@ -34,7 +34,7 @@ const Profile = () => {
 
   const handleSave = async () => {
     setUser({ ...formData });
-    fetch("http://localhost:5000/api/users/update/" + loggedUser.email, {
+    fetch(" https://abc-college-backend-76ka.vercel.app/api/users/update/" + loggedUser.email, {
       method: "PUT", 
       headers: {
         "Content-Type": "application/json",

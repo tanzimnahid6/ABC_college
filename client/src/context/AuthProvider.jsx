@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   //create user with email password
   const createUser = (email, password, name, address, subject, university, phone, dob) => {
     setLoading(true);
-    fetch("http://localhost:5000/api/users/createUser",{
+    fetch(" https://abc-college-backend-76ka.vercel.app/api/users/createUser",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

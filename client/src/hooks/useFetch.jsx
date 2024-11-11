@@ -11,7 +11,7 @@ const useFetch = (url, method = "GET", options = {}) => {
       setError(null);
 
       try {
-        const response = await fetch(`http://localhost:5000/${url}`, {
+        const response = await fetch(`https://abc-college-backend-76ka.vercel.app/${url}`, {
           method,
           headers: {
             "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const useFetch = (url, method = "GET", options = {}) => {
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:5000/${url}`, {
+      const response = await fetch(` https://abc-college-backend-76ka.vercel.app/${url}`, {
         method,
         headers: {
           "Content-Type": "application/json",

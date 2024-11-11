@@ -7,7 +7,7 @@ const Review = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/api/reviews/getReviewWithMine/${user.email}`)
+      fetch(` https://abc-college-backend-76ka.vercel.app/api/reviews/getReviewWithMine/${user.email}`)
         .then((res) => res.json())
         .then((data) => setReviews(data))
         .catch((err) => console.error("Failed to fetch reviews:", err));

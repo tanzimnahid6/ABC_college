@@ -15,7 +15,7 @@ const Body = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("http://localhost:5000/api/colleges")
+    fetch("https://abc-college-backend-76ka.vercel.app/api/colleges")
       .then(res => res.json())
       .then(data => {
         setColleges(data);

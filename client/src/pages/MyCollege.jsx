@@ -19,7 +19,7 @@ const MyCollege = () => {
   }, []);
   
   const handleReviewSubmit = () => {
-    fetch("http://localhost:5000/api/reviews/addReview",{
+    fetch(" https://abc-college-backend-76ka.vercel.app/api/reviews/addReview",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
