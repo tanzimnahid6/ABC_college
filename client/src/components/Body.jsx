@@ -39,7 +39,7 @@ const Body = () => {
   }, [search, colleges]);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 ">
       <Banner setSearch={setSearch} search={search} />
 
       {/* College Cards Section */}
@@ -52,8 +52,8 @@ const Body = () => {
           <p className="text-center">Loading...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredColleges.map(college => (
-              <CollegeCard key={college.id} college={college} />
+            {filteredColleges.map((college,i) => (
+              <CollegeCard key={i} college={college} />
             ))}
           </div>
         )}

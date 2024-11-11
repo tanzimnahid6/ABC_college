@@ -26,7 +26,7 @@ const CollegeCard = ({ college }) => {
     </p>
     <Link
       to={`/colleges/${college._id}`}
-      className="btn btn-sm btn-outline mt-4"
+      className="btn bg-indigo-400 hover:bg-indigo-500 text-white font-bold btn-sm mt-4"
     >
       Details
     </Link>

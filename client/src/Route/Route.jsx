@@ -11,6 +11,7 @@ import SignUp from "../components/auth/SignUp";
 import Profile from "../components/Profile/Profile";
 import CollegeDetails from "../pages/CollegeDetails/CollegeDetails";
 import PrivetRoute from "./PrivetRoute";
+import TaskDetailsPage from "../pages/Description";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +61,10 @@ const route = createBrowserRouter([
             <Profile></Profile>
           </PrivetRoute>
         ),
+      },
+      {
+        path:"/taskDescription",
+        element:<TaskDetailsPage></TaskDetailsPage>
       },
       {
         path: "*",

@@ -73,7 +73,7 @@ const Profile = () => {
             <p>
               <strong>Address:</strong> {user?.address}
             </p>
-            <button onClick={handleEditToggle} className="btn btn-primary mt-4">
+            <button onClick={handleEditToggle} className="btn bg-indigo-400 hover:bg-indigo-500 text-white font-bold  mt-4">
               Edit Profile
             </button>
           </div>
@@ -114,7 +114,7 @@ const Profile = () => {
             />
             <button
               onClick={handleSave}
-              className="btn btn-success w-full mt-4"
+              className="btn bg-indigo-400 hover:bg-indigo-500 text-white font-bold w-full mt-4"
             >
               Save
             </button>

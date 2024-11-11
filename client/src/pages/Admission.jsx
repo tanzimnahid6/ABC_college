@@ -155,7 +155,7 @@ const Admission = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-full"
+              className="btn bg-indigo-400 hover:bg-indigo-500 text-white font-bold w-full"
             >
               {loading ? "Submitting" : "Submit"}
             </button>

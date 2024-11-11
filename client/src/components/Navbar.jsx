@@ -26,9 +26,9 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold hover:text-gray-200 transition duration-200"
+          
         >
-          College Portal
+         <img src="./logo.png" alt="Logo"  className="w-20 "/>
         </Link>
 
         {/* Desktop Menu */}
@@ -56,6 +56,12 @@ const Navbar = () => {
             className="hover:underline hover:text-gray-200 transition duration-200"
           >
             My College
+          </Link>
+          <Link
+            to="/taskDescription"
+            className="hover:underline text-blue-700 text-pretty font-bold hover:text-gray-200 transition duration-200 animate-blink"
+          >
+            Features ?
           </Link>
         </div>
 
