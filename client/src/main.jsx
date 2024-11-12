@@ -6,6 +6,10 @@ import { RouterProvider } from "react-router-dom";
 import route from "./Route/Route.jsx";
 import AuthProvider from "./context/AuthProvider.jsx";
 import { CollegesProvider } from "./context/CollegesContext.jsx";
+
+
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>

@@ -1,7 +1,7 @@
 // src/components/Profile.js
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
-import useFetch from "../../hooks/useFetch";
+
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        ` https://abc-college-backend-76ka.vercel.app/api/users/${loggedUser?.email}`
+        ` import.meta.env.VITE_APP_SERVER_URL/api/users/${loggedUser?.email}`
       );
       const data = await response.json();
       setUser(data);
@@ -34,7 +34,7 @@ const Profile = () => {
 
   const handleSave = async () => {
     setUser({ ...formData });
-    fetch(" https://abc-college-backend-76ka.vercel.app/api/users/update/" + loggedUser.email, {
+    fetch(`${import.meta.env.VITE_APP_SERVER_URL}/api/users/update/`+ loggedUser.email, {
       method: "PUT", 
       headers: {
         "Content-Type": "application/json",

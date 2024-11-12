@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { TfiEmail } from 'react-icons/tfi';
-import { useColleges } from '../context/CollegesContext';
 import { useAuth } from '../context/AuthProvider';
 
 const MyCollege = () => {
@@ -19,7 +17,7 @@ const MyCollege = () => {
   }, []);
   
   const handleReviewSubmit = () => {
-    fetch(" https://abc-college-backend-76ka.vercel.app/api/reviews/addReview",{
+    fetch(`${import.meta.env.VITE_APP_SERVER_URL}/api/reviews/addReview`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

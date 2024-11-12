@@ -15,14 +15,15 @@ const Body = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("https://abc-college-backend-76ka.vercel.app/api/colleges")
-      .then(res => res.json())
-      .then(data => {
+    fetch(`${import.meta.env.VITE_APP_SERVER_URL}/api/colleges`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
         setColleges(data);
         setFilteredColleges(data); // Show all colleges initially
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
@@ -30,7 +31,7 @@ const Body = () => {
 
   // Filter colleges whenever search changes
   useEffect(() => {
-    const filtered = colleges.filter(college =>
+    const filtered = colleges.filter((college) =>
       college.name.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -52,7 +53,7 @@ const Body = () => {
           <p className="text-center">Loading...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredColleges.map((college,i) => (
+            {filteredColleges.map((college, i) => (
               <CollegeCard key={i} college={college} />
             ))}
           </div>

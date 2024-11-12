@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { FaUser } from "react-icons/fa";
 const Navbar = () => {
-  const [search, setSearch] = useState("");
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState({}); // Replace this with useAuth() or context if available
   const { user: loggedUser, logout } = useAuth();
@@ -85,7 +85,7 @@ const Navbar = () => {
               )}
 
               <p>
-                <Link to="profile">{user.name}</Link>
+                <Link to="profile">{user?.name}</Link>
               </p>
               <button
                 onClick={handleLogout}

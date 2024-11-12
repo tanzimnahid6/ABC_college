@@ -9,13 +9,13 @@ const useFetch = (url, method = "GET", options = {}) => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-
+      
       try {
-        const response = await fetch(`https://abc-college-backend-76ka.vercel.app/${url}`, {
+        const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URL}/${url}`, {
           method,
           headers: {
             "Content-Type": "application/json",
-            ...options.headers, // Custom headers if provided
+            ...options.headers, 
           },
           ...options,
         });
@@ -38,6 +38,7 @@ const useFetch = (url, method = "GET", options = {}) => {
     if (method === "GET") {
       fetchData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, method, JSON.stringify(options)]); // Only re-fetch if `url`, `method`, or `options` change
 
   // Return the `fetchData` function for manual fetch calls (e.g., POST, PUT, DELETE)
@@ -46,7 +47,7 @@ const useFetch = (url, method = "GET", options = {}) => {
     setError(null);
 
     try {
-      const response = await fetch(` https://abc-college-backend-76ka.vercel.app/${url}`, {
+      const response = await fetch(` import.meta.env.VITE_APP_SERVER_URL/${url}`, {
         method,
         headers: {
           "Content-Type": "application/json",

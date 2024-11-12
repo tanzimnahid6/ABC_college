@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const collegeRoutes = require('./routes/collegeRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
+const starterRoutes = require('./routes/starterRoutes');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -15,13 +16,14 @@ const app = express();
 app.use(cors());
 
 // Optionally, customize CORS settings
-app.use(cors({
-  origin: 'http://localhost:5173/', // Allow only specific origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Restrict to specific HTTP methods if needed
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173/', // Allow only specific origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Restrict to specific HTTP methods if needed
+// }));
 
 app.use(express.json());
 
+app.use("/",starterRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/colleges', collegeRoutes);
 app.use('/api/reviews', reviewsRoutes);
