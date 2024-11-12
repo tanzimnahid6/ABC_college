@@ -1,17 +1,45 @@
-// routes/userRoutes.js
-const express = require('express');
-const { createUser, getUsers, getUserById, updateUser, deleteUser ,getUserByEmail,updateUserByEmail, loginUser } = require('../controllers/userController');
+const express = require("express");
+const multer = require("multer");
 
+const path = require("path");
+const fs = require("fs");
+const {
+  createUser,
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+  getUserByEmail,
+  updateUserByEmail,
+  loginUser
+} = require("../controllers/userController");
 const router = express.Router();
 
-router.post('/createUser', createUser);
-router.get('/', getUsers);
-router.get('/:email',getUserByEmail)
-router.get('/:id', getUserById);
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+// Ensure the uploads directory exists
+const upload = multer({ storage: storage });
 
-router.put('/:id', updateUser);
-router.put('/update/:email', updateUserByEmail);
-router.delete('/:id', deleteUser);
+router.post("/createUser", upload.single("image"), createUser);
+
+router.get("/", getUsers);
+router.get("/:email", getUserByEmail);
+router.get("/:id", getUserById);
+
+router.put("/:id", updateUser);
+router.put("/update/:email", updateUserByEmail);
+router.delete("/:id", deleteUser);
 
 module.exports = router;

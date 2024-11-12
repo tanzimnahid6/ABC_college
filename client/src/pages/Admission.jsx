@@ -29,7 +29,7 @@ const Admission = () => {
       phone: "",
       address: "",
       dob: "",
-      // image: null,
+      image: null,
     });
   };
 
@@ -38,27 +38,47 @@ const Admission = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // const handleImageChange = (e) => {
-  //   setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
-  // };
+  const handleImageChange = (e) => {
+    setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = { ...formData, university: selectedCollege.name };
-    try {
-      localStorage.setItem("myCollege", JSON.stringify(userInfo));
-      console.log("Data saved in localStorage:", userInfo);
-    } catch (error) {
-      console.error("Error saving data to localStorage:", error);
+    const formData2 = new FormData();
+    formData2.append("name", userInfo.name);
+    formData2.append("subject", userInfo.subject);
+    formData2.append("email", userInfo.email);
+    formData2.append("phone", userInfo.phone);
+    formData2.append("address", userInfo.address);
+    formData2.append("dob", userInfo.dob);
+    formData2.append("university", selectedCollege.name);
+    // Append the image file, if available
+    if (userInfo.image) {
+      formData2.append("image", userInfo.image);
     }
 
+    console.log(formData2.get("image"));
+
     try {
-      await refetch({
-        body: JSON.stringify(userInfo),
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_SERVER_URL}/api/users/createUser`,
+        {
+          method: "POST",
+          // headers: {"Content-Type": "multipart/form-data"},
+          body:formData2,
+        }
+      ).then((res)=>{
+        console.log(res)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log("File uploaded successfully:", result);
     } catch (error) {
-      console.error("Error submitting form data:", error);
+      console.log(error);
     }
   };
 
@@ -145,19 +165,19 @@ const Admission = () => {
               onChange={handleInputChange}
               required
             />
-            {/* <input
+            <input
               type="file"
               name="image"
               className="input input-bordered w-full"
               onChange={handleImageChange}
               required
-            /> */}
+            />
             <button
               type="submit"
               disabled={loading}
               className="btn bg-indigo-400 hover:bg-indigo-500 text-white font-bold w-full"
             >
-              {loading ? "Submitting" : "Submit"}
+              submit
             </button>
           </form>
         )}

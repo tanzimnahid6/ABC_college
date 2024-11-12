@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        ` import.meta.env.VITE_APP_SERVER_URL/api/users/${loggedUser?.email}`
+        `${import.meta.env.VITE_APP_SERVER_URL}/api/users/${loggedUser?.email}`
       );
       const data = await response.json();
       setUser(data);

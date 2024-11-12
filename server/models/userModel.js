@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     university: { type: String },
     phone: { type: String },
     dob: { type: String },
+    image: { type: String },
   },
   { timestamps: true }
 );

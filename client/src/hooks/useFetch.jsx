@@ -47,7 +47,7 @@ const useFetch = (url, method = "GET", options = {}) => {
     setError(null);
 
     try {
-      const response = await fetch(` import.meta.env.VITE_APP_SERVER_URL/${url}`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URL}/${url}`, {
         method,
         headers: {
           "Content-Type": "application/json",

@@ -1,11 +1,22 @@
 // controllers/userController.js
 const User = require("../models/userModel");
-const { replaceMongoIdInArray } = require("../utils/convertId");
-
 // Create a new user
 exports.createUser = async (req, res) => {
+  const { name, subject, email, phone, address, dob, university } = req.body;
+  const image = req.file;
+  const newUser = {
+    name,
+    subject,
+    email,
+    phone,
+    address,
+    dob,
+    university,
+    image: image.filename,
+  };
+  
   try {
-    const user = new User(req.body);
+    const user = new User(newUser);
     const isAlreadyExist = await User.findOne({email: user.email})
     if(isAlreadyExist){
       return res.json({success:false, message:"User already exist"})
@@ -65,7 +76,6 @@ exports.updateUser = async (req, res) => {
 
 // update a user by email
 exports.updateUserByEmail = async (req, res) => {
-  
   try {
     const user = await User.findOneAndUpdate(
       { email: req.params.email },
@@ -89,3 +99,14 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+// try {
+//   const user = new User(req.body);
+//   const isAlreadyExist = await User.findOne({ email: user.email });
+//   if (isAlreadyExist) {
+//     return res.json({ success: false, message: "User already exist" });
+//   }
+//   await user.save();
+//   res.status(201).json(user);
+// } catch (error) {
+//   res.status(400).json({ message: error.message });
+// }
