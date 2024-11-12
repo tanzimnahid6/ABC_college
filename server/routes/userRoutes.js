@@ -11,6 +11,7 @@ const {
   deleteUser,
   getUserByEmail,
   updateUserByEmail,
+  getUserByImageName,
   loginUser
 } = require("../controllers/userController");
 const router = express.Router();
@@ -36,6 +37,7 @@ router.post("/createUser", upload.single("image"), createUser);
 
 router.get("/", getUsers);
 router.get("/:email", getUserByEmail);
+router.get("/image/:imageName", getUserByImageName);
 router.get("/:id", getUserById);
 
 router.put("/:id", updateUser);
